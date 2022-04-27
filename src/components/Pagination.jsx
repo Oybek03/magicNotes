@@ -1,19 +1,27 @@
 import React from "react";
 import "../StyleImage.css";
 
-class Pagination extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="pagination-btn">
-        <button className="btn"> orqaga</button>
-        <div>{this.props.knopka} </div>
-        <button className="btn">oldinga </button>
+const Pagination = function (props) {
+  console.log(props);
+  const oldinga = () => {
+    console.log("next");
+    props.malumotniOl(props.search, props.page + 1);
+  };
+  const orqaga = () => {
+    props.malumotniOl(props.search, props.page - 1);
+  };
+  return (
+    <>
+      <div className="buttons">
+        <button onClick={orqaga} className="prev_btn btn">
+          back
+        </button>
+        <h3>{props.page}</h3>
+        <button onClick={oldinga} className="next_btn btn">
+          Next
+        </button>
       </div>
-    );
-  }
-}
+    </>
+  );
+};
 export default Pagination;

@@ -4,36 +4,42 @@ import ImageList from "./ImageList";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 class App extends React.Component {
-  
-  searchdanMalumotniOl = async (data1) => {
+  state = { imageArr: [], search: "", page: 1 };
+
+  searchdanMalumotniOl = async (data1, pg = 1) => {
+    if (pg) {
+      this.setState({ search: data1 });
+      this.setState({ page: pg });
+    }
+    console.log(this.state.page);
     const data = await axios.get("https://api.unsplash.com/search/photos", {
       params: {
         query: data1,
-        page: this.state.page,
-        per_page: 5,
+        page: pg,
+        per_page: 10,
       },
       headers: {
         Authorization: "Client-ID fFxqUKuJS8hx3nwzRQoYiHB5URcqFjkGG-FSsZUDOb4",
       },
     });
-    console.log(data);
     this.setState({ imageArr: data.data.results });
-    console.log(this.state.imageArr);
   };
 
   // componentDidUpdate() {
   //   this.getData();
   // }
-  btnClick() {
-    this.setState({ page: 2 });
-    console.log(this.state.page);
-  }
+
   render() {
     return (
       <div>
         <SearchBar malumotniOl={this.searchdanMalumotniOl} />
+        <br />
         <ImageList dataImg={this.state.imageArr} />
-        <button onClick={this.btnClick}>lll</button>
+        <Pagination
+          malumotniOl={this.searchdanMalumotniOl}
+          page={this.state.page}
+          search={this.state.search}
+        />
       </div>
     );
   }

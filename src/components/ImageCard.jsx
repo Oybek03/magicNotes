@@ -14,7 +14,6 @@ class ImageCard extends React.Component {
     this.setState({ spans: spans });
   };
   componentDidMount() {
-    console.log(this.imageDOM);
     this.imageDOM.current.addEventListener("load", this.setSpan);
   }
   render() {
